@@ -32,7 +32,7 @@ class Poller:
       with open(self.config.output, 'a') as writer:
         writer.write("\n{}".format(self.get_data_row()))
     else:
-      print(self.get_data_row())
+      print(self.get_data_row(), flush=True)
 
   def retrieve_metrics(self):
     object = load_json(self.config.input)
