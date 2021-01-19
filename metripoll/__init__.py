@@ -1,14 +1,17 @@
+from metripoll.library.poller import Poller
 import sys
 
 from . import library
 
 def runnable():
-  json_metrics = sys.argv[1:]
+  params = library.parser.parse_params(sys.argv[1:])
 
-  print("Supplied arguments: {}".format(json_metrics))
+  json_metrics = params["metrics"]
 
-  json_object = library.loader.loadjson('data/mockResponse.json')
+  json_object = library.loader.load_json('data/mockResponse.json')
+
+  poller = Poller(params)
 
   for metric in json_metrics:
-    target = library.parser.parse(json_object, metric)
+    target = library.parser.parse_metrics(json_object, metric)
     print("{} = {}".format(metric, target))
