@@ -38,4 +38,6 @@ def parse_params(arguments) -> PollConfig:
 
   config.metrics = args
 
+  config.verify()
+
   return config

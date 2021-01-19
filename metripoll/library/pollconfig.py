@@ -5,6 +5,7 @@ class PollConfig:
     self.interval = 1
     self.input = ""
     self.output = ""
+    self.fileoutput = False
     self.metrics = []
   
   def verify(self):
@@ -21,12 +22,13 @@ class PollConfig:
       print("Given metrics: {}".format(self.metrics))
     
     if self.interval < 1:
-      print("Polling interval must be greater than 1.")
+      print("Polling interval cannot be less than 1 second.")
       sys.exit(2)
     else:
-      print("Given polling interval: {}".format(self.interval))
+      print("Given polling interval (seconds): {}".format(self.interval))
     
     if len(self.output) > 0:
       print("Output will be saved to file: {}".format(self.output))
+      self.fileoutput = True
     else:
       print("Output will be printed to the console.")
