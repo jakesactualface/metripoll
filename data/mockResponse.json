@@ -1,0 +1,13 @@
+{
+  "outerMember": "abc",
+  "outerArray": [
+    1, 2, 3
+  ],
+  "innerObject": {
+    "innerMember1": "def",
+    "innerArray": [
+      4, 5, 6
+    ],
+    "innerMember2": "ghi"
+  }
+}
