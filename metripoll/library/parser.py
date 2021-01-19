@@ -1,5 +1,7 @@
 import sys, getopt
 
+from metripoll.library.pollconfig import PollConfig
+
 def __getMemberValue(target, member):
   # TODO: also handle arrays
   return target[member]
@@ -15,35 +17,25 @@ def parse_metrics(object, path):
   
   return target
 
-
-
-def parse_params(arguments):
-  params = dict()
+def parse_params(arguments) -> PollConfig:
+  config = PollConfig()
 
   try:
     opts, args = getopt.getopt(arguments, "u:o:t:")
   except getopt.GetoptError:
-    print("metripoll -u <url> -o <outputFile>")
+    print("metripoll -u <url> [-o <outputFile>] [-t <pollInterval>] {metrics...}")
     sys.exit(2)
 
   for opt, arg in opts:
     if opt == "-u":
-      print("Given URL: {}".format(arg))
-      params["url"] = arg
+      config.input = arg
 
     elif opt == "-o":
-      print("Printing to output file: {}".format(arg))
-      params["output"] = arg
+      config.output = arg
 
     elif opt == "-t":
-      print("Polling at interval (seconds): {}".format(arg))
-      params["interval"] = arg
+      config.interval = int(arg)
 
-  if len(args) < 1:
-    print("JSON metrics must be supplied as arguments.")
-    sys.exit(2)
-  
-  params["metrics"] = args
-  print("Polling for metrics: {}".format(args))
+  config.metrics = args
 
-  return params
+  return config
