@@ -41,7 +41,7 @@ class Poller:
     data_row = []
 
     if self.config.is_timestamp_enabled():
-      data_row.append(datetime.datetime.now())
+      data_row.append(str(datetime.datetime.now()))
 
     for metric in self.data:
       data_row.append("{}".format(self.data[metric]))
