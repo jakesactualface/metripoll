@@ -1,4 +1,5 @@
 import argparse
+import sys
 from typing import List, Text
 from metripoll.metric import Metric
 from importlib.metadata import version
@@ -6,11 +7,11 @@ from importlib.metadata import version
 
 class Configuration:
     def __init__(self):
-        self.arguments = self._load_config()
+        self.arguments = self._load_config(sys.argv[1:])
 
-    def _load_config(self):
+    def _load_config(self, args):
         parser = argparse.ArgumentParser(prog="metripoll")
-        parser.add_argument('--version', action='version', version=version("metripoll"))
+        parser.add_argument("-v", "--version", action="version", version=version("metripoll"))
         parser.add_argument(
             "-u", "--url", help="URL to poll for metrics", required=True)
         parser.add_argument(
@@ -23,7 +24,7 @@ class Configuration:
         parser.add_argument(
             "metrics", help="JSON metrics to be parsed from the response", nargs="+", action=MetricParseAction)
 
-        return parser.parse_args()
+        return parser.parse_args(args)
 
     def get_metrics(self) -> List[Metric]:
         return self.arguments.metrics
